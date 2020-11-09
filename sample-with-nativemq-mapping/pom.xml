@@ -21,8 +21,8 @@
             <artifactId>com.ibm.mq.allclient</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-activemq</artifactId>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-camel</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.geronimo.specs</groupId>
@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring-main</artifactId>
+            <artifactId>camel-spring</artifactId>
         </dependency>
 
         <dependency>
@@ -107,7 +107,6 @@
                 <version>${com.spotify.dockerfile-maven-plugin.version}</version>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>
                         <goals>
                             <goal>build</goal>
                             <goal>push</goal>
@@ -116,7 +115,7 @@
                 </executions>
                 <configuration>
                     <!-- configure your Amazon ECR repository URI: https://console.aws.amazon.com/ecs/home?#/repositories -->
-                    <repository>${aws-account-id}.dkr.ecr.${aws-region}.amazonaws.com/amazon-mq-migration-from-ibm-mq/${project.artifactId}</repository>
+                    <repository>${aws-account-id}.dkr.ecr.${aws.region}.amazonaws.com/amazon-mq-migration-from-ibm-mq/${project.artifactId}</repository>
                     <tag>latest</tag>
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                 </configuration>

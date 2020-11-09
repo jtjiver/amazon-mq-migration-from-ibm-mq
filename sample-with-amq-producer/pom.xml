@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -15,9 +16,10 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
+
 		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-activemq</artifactId>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-camel</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.geronimo.specs</groupId>
@@ -31,22 +33,27 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-spring-main</artifactId>
+			<artifactId>camel-spring</artifactId>
 		</dependency>
+
+        <!--
 		<dependency>
 			<groupId>name.wramner.jmstools.producer</groupId>
 			<artifactId>jmstools</artifactId>
 			<version>1.10</version>
+        -->
 		</dependency>
+
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-cloudwatch -->
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-cloudwatch</artifactId>
-			<version>${com.amazonaws.version}</version>
+			<version>1.11.665</version>
 		</dependency>
 		<dependency>
 			<groupId>com.amazonaws.serverless</groupId>
@@ -58,6 +65,7 @@
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>2.26</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
@@ -87,12 +95,15 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
+			
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
-			<version>${com.amazonaws.version}</version>
+			<version>1.11.665</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -105,19 +116,9 @@
 					<include>**/*.template</include>
 				</includes>
 			</resource>
+
 		</resources>
-
 		<plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -177,7 +178,6 @@
 				<version>${com.spotify.dockerfile-maven-plugin.version}</version>
 				<executions>
 					<execution>
-						<phase>deploy</phase>
 						<goals>
 							<goal>build</goal>
 							<goal>push</goal>
@@ -185,7 +185,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>${aws-account-id}.dkr.ecr.${aws-region}.amazonaws.com/amazon-mq-migration-from-ibm-mq/${project.artifactId}</repository>
+
+					<repository>${aws-account-id}.dkr.ecr.${aws.region}.amazonaws.com/amazon-mq-migration-from-ibm-mq/${project.artifactId}</repository>
 					<tag>latest</tag>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 				</configuration>
